@@ -5,7 +5,13 @@ import { Colors } from "@/constants/Colors";
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  type?:
+    | "default"
+    | "title"
+    | "defaultSemiBold"
+    | "subtitle"
+    | "link"
+    | "danger";
 };
 
 export function ThemedText({
@@ -25,6 +31,7 @@ export function ThemedText({
         type === "title" ? styles.title : undefined,
         type === "subtitle" ? styles.subtitle : undefined,
         type === "link" ? styles.link : undefined,
+        type === "danger" ? styles.danger : undefined,
         style,
       ]}
       {...rest}
@@ -50,5 +57,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 30,
     color: Colors.faslist.blue,
+  },
+  danger: {
+    fontSize: 12,
+    lineHeight: 20,
+    color: Colors.faslist.red,
   },
 });

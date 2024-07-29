@@ -1,7 +1,7 @@
-import OnboardingScreenOne from "@/screens/onboarding/ScreenOne";
+import OnboardingScreen from "@/screens/onboarding/ScreenOne";
 
-const ScreenOne = () => {
-  return <OnboardingScreenOne />;
+const Onboard = () => {
+  return <OnboardingScreen />;
 };
 
-export default ScreenOne;
+export default Onboard;
