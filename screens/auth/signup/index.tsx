@@ -1,28 +1,41 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView, Text, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { ReactNativeStatusBar } from "@/hooks/useRNApis";
 import { Colors } from "@/constants/Colors";
-import { Link } from "expo-router";
+import CustomSafeAreaView from "@/components/CustomSafeAreaView";
+import SignupForm from "./signupForm";
 
 const SignUpPage = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <ThemedText type="title">Signup Page</ThemedText>
+    <CustomSafeAreaView style={styles.container}>
+      <View style={styles.loginWrapper}>
+        <View style={styles.loginTextWrapper}>
+          <ThemedText type="title" style={{ fontSize: 18 }}>
+            Join FasList Today!
+          </ThemedText>
+          <ThemedText type="default" style={{ lineHeight: 20 }}>
+            Create an account to start organizing your tasks and earning
+            rewards.
+          </ThemedText>
+        </View>
+        <SignupForm />
       </View>
-      <Link href={"/"}>
-        <ThemedText type="link">Login</ThemedText>
-      </Link>
-    </SafeAreaView>
+    </CustomSafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: ReactNativeStatusBar.currentHeight || 0,
     backgroundColor: Colors.faslist.white,
+  },
+  loginWrapper: {
+    flex: 1,
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    gap: 20,
+  },
+  loginTextWrapper: {
+    gap: 1,
   },
 });
 

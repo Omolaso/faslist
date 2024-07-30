@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import {
   View,
-  SafeAreaView,
   StyleSheet,
   ImageBackground,
   Platform,
@@ -13,7 +12,8 @@ import Carousel from "pinar";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import { ReactNativeStatusBar } from "@/hooks/useRNApis";
-import CustomButton from "@/utils/CustomButton";
+import CustomButton from "@/components/CustomButton";
+import CustomSafeAreaView from "@/components/CustomSafeAreaView";
 // import { onboardingSlides, onboardingSlidesType } from "./onboardingData";
 
 const OnboardingScreen = () => {
@@ -39,7 +39,7 @@ const OnboardingScreen = () => {
         source={require("@/assets/images/onboarding-screen1.png")}
         resizeMode="cover"
       >
-        <SafeAreaView style={styles.full}>
+        <CustomSafeAreaView style={styles.full}>
           <View style={[styles.full, styles.viewContainer]}>
             <View style={styles.onboardTextContainer}>
               <ThemedText
@@ -63,7 +63,7 @@ const OnboardingScreen = () => {
               <AntDesign name="arrowright" size={24} color="white" />
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </CustomSafeAreaView>
       </ImageBackground>
 
       <ImageBackground
@@ -71,7 +71,7 @@ const OnboardingScreen = () => {
         source={require("@/assets/images/onboarding-screen2.png")}
         resizeMode="cover"
       >
-        <SafeAreaView style={styles.full}>
+        <CustomSafeAreaView style={styles.full}>
           <View style={[styles.full, styles.viewContainer]}>
             <View style={styles.onboardTextContainer}>
               <ThemedText
@@ -95,7 +95,7 @@ const OnboardingScreen = () => {
               <AntDesign name="arrowright" size={24} color="white" />
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </CustomSafeAreaView>
       </ImageBackground>
 
       <ImageBackground
@@ -103,8 +103,14 @@ const OnboardingScreen = () => {
         source={require("@/assets/images/onboarding-screen3.png")}
         resizeMode="cover"
       >
-        <SafeAreaView style={styles.full}>
-          <View style={[styles.full, styles.viewContainer]}>
+        <CustomSafeAreaView style={styles.full}>
+          <View
+            style={[
+              styles.full,
+              styles.viewContainer,
+              { alignItems: "stretch" },
+            ]}
+          >
             <View style={styles.onboardTextContainer}>
               <ThemedText
                 type="title"
@@ -125,7 +131,7 @@ const OnboardingScreen = () => {
               clickFunction={() => router.replace("(auth)")}
             />
           </View>
-        </SafeAreaView>
+        </CustomSafeAreaView>
       </ImageBackground>
     </Carousel>
   );
@@ -140,10 +146,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     gap: 40,
-    padding: ReactNativeStatusBar.currentHeight || 0,
   },
   onboardTextContainer: {
     justifyContent: "center",
+    alignSelf: "center",
     width: 290,
     height: 120,
     borderRadius: 10,
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     ...Platform.select({
       ios: {
-        bottom: 95,
+        bottom: 115,
       },
       android: {
         bottom: 85,

@@ -11,6 +11,8 @@ import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import CustomSafeAreaView from "@/components/CustomSafeAreaView";
+import { Colors } from "@/constants/Colors";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,6 +38,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(onboarding)" />
         <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(dashboard)" />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

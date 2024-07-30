@@ -5,13 +5,7 @@ import { Colors } from "@/constants/Colors";
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?:
-    | "default"
-    | "title"
-    | "defaultSemiBold"
-    | "subtitle"
-    | "link"
-    | "danger";
+  type?: "default" | "title" | "subtitle" | "link" | "danger";
 };
 
 export function ThemedText({
@@ -43,15 +37,18 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
+    color: Colors.faslist.black,
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
     lineHeight: 32,
+    color: Colors.faslist.black,
   },
   subtitle: {
     fontSize: 13.3,
     fontWeight: "bold",
+    color: Colors.faslist.black,
   },
   link: {
     fontSize: 16,

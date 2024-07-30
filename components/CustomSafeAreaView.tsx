@@ -1,6 +1,13 @@
 import React, { ReactNode } from "react";
-import { StyleSheet, SafeAreaView, ViewProps } from "react-native";
-import { ReactNativeStatusBar } from "@/hooks/useRNApis";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  ViewProps,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface CustomSafeAreaViewProps extends ViewProps {
   children: ReactNode;
@@ -12,16 +19,24 @@ const CustomSafeAreaView: React.FC<CustomSafeAreaViewProps> = ({
   ...rest
 }) => {
   return (
-    <SafeAreaView style={[styles.container, style]} {...rest}>
-      {children}
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={[styles.container, style]} {...rest}>
+          {children}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: ReactNativeStatusBar.currentHeight || 0,
+    alignItems: "stretch",
+    padding: 20,
   },
 });
 

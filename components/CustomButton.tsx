@@ -14,7 +14,7 @@ const CustomButton = ({ textValue, clickFunction }: ButtonType) => {
       onPress={() => clickFunction()}
       style={styles.customButtonStyles}
     >
-      <ThemedText type="default" style={styles.customButtonTextStyles}>
+      <ThemedText type="title" style={styles.customButtonTextStyles}>
         {textValue}
       </ThemedText>
     </TouchableOpacity>
@@ -23,7 +23,6 @@ const CustomButton = ({ textValue, clickFunction }: ButtonType) => {
 
 const styles = StyleSheet.create({
   customButtonStyles: {
-    width: 350,
     height: 48,
     borderRadius: 16,
     justifyContent: "center",
