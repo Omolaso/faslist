@@ -11,8 +11,6 @@ import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import CustomSafeAreaView from "@/components/CustomSafeAreaView";
-import { Colors } from "@/constants/Colors";
 
 SplashScreen.preventAutoHideAsync();
 

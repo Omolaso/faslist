@@ -11,10 +11,8 @@ import { router } from "expo-router";
 import Carousel from "pinar";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
-import { ReactNativeStatusBar } from "@/hooks/useRNApis";
 import CustomButton from "@/components/CustomButton";
 import CustomSafeAreaView from "@/components/CustomSafeAreaView";
-// import { onboardingSlides, onboardingSlidesType } from "./onboardingData";
 
 const OnboardingScreen = () => {
   const carouselRef = useRef<Carousel | null>(null);
@@ -163,7 +161,7 @@ const styles = StyleSheet.create({
         bottom: 115,
       },
       android: {
-        bottom: 85,
+        bottom: 80,
       },
     }),
     left: 0,

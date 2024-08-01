@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import React, { ReactNode } from "react";
 import {
   StyleSheet,
@@ -9,9 +10,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface CustomSafeAreaViewProps extends ViewProps {
+type CustomSafeAreaViewProps = ViewProps & {
   children: ReactNode;
-}
+};
 
 const CustomSafeAreaView: React.FC<CustomSafeAreaViewProps> = ({
   children,
@@ -36,7 +37,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "stretch",
-    padding: 20,
+    padding: 15,
+    fontFamily: "Poppins",
+    backgroundColor: Colors.faslist.white,
   },
 });
 

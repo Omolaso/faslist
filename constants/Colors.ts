@@ -27,5 +27,6 @@ export const Colors = {
     red: "#EE1E2B",
     gradientLight: "#CCE4FF",
     gradientDark: "#AA9BD4",
+    avatarBg: "#D5CDEA",
   },
 };
