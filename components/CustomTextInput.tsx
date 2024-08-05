@@ -28,6 +28,7 @@ const CustomTextInput = ({
   password,
   onBlur,
   onChange,
+  ...rest
 }: CustomTextInputProps) => {
   const colorScheme = useColorScheme();
 
@@ -39,7 +40,7 @@ const CustomTextInput = ({
       onBlur={onBlur}
       onChangeText={onChange}
       keyboardAppearance={colorScheme as ColorScheme}
-      style={styles.textInput}
+      style={[styles.textInput, { ...rest }]}
       placeholderTextColor={Colors.faslist.gray}
       cursorColor={Colors.faslist.gray}
       secureTextEntry={password}
@@ -50,5 +51,5 @@ const CustomTextInput = ({
 export default CustomTextInput;
 
 const styles = StyleSheet.create({
-  textInput: { flex: 1, color: Colors.faslist.black },
+  textInput: { flex: 1, color: Colors.faslist.black, textAlignVertical: "top" },
 });
