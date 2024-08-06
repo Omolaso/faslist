@@ -7,7 +7,6 @@ import {
   TextInput,
   FlatList,
   Text,
-  Button,
   TouchableWithoutFeedback,
   Pressable,
   ScrollView,
@@ -70,7 +69,7 @@ const AddTodoPage = () => {
   };
 
   return (
-    <CustomSafeAreaView>
+    <CustomSafeAreaView style={{ backgroundColor: Colors.faslist.white }}>
       <ScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{ flex: 1, gap: 20 }}>
@@ -140,7 +139,12 @@ const AddTodoPage = () => {
                         placeholderTextColor={Colors.faslist.gray}
                         style={[
                           styles.inputContainer,
-                          { height: 150, color: Colors.faslist.black },
+                          {
+                            height: 150,
+                            color: Colors.faslist.black,
+                            textAlignVertical: "top",
+                            paddingVertical: 10
+                          },
                         ]}
                       />
                     )}

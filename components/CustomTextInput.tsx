@@ -17,6 +17,7 @@ export type CustomTextInputProps = TextInputProps & {
   textValue: string;
   placeholder: string;
   password?: boolean;
+  editable?: boolean;
   onBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onChange: (text: string) => void;
 };
@@ -26,6 +27,7 @@ const CustomTextInput = ({
   keyboardType = "default",
   placeholder,
   password,
+  editable,
   onBlur,
   onChange,
   ...rest
@@ -44,6 +46,7 @@ const CustomTextInput = ({
       placeholderTextColor={Colors.faslist.gray}
       cursorColor={Colors.faslist.gray}
       secureTextEntry={password}
+      editable={editable}
     />
   );
 };
@@ -51,5 +54,5 @@ const CustomTextInput = ({
 export default CustomTextInput;
 
 const styles = StyleSheet.create({
-  textInput: { flex: 1, color: Colors.faslist.black, textAlignVertical: "top" },
+  textInput: { flex: 1, color: Colors.faslist.black },
 });

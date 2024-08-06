@@ -1,24 +1,29 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import CustomSafeAreaView from "@/components/CustomSafeAreaView";
 import LoginForm from "./loginForm";
 
 const LoginPage = () => {
+  const inset = useSafeAreaInsets();
+
   return (
     <CustomSafeAreaView style={styles.container}>
-      <View style={styles.loginWrapper}>
-        <View style={styles.loginTextWrapper}>
-          <ThemedText type="title" style={{ fontSize: 18 }}>
-            Welcome Back!
-          </ThemedText>
-          <ThemedText type="default" style={{ lineHeight: 20 }}>
-            Log in to continue managing your tasks and staying organized.
-          </ThemedText>
+      <ScrollView>
+        <View style={[styles.loginWrapper, { marginTop: inset.top }]}>
+          <View style={styles.loginTextWrapper}>
+            <ThemedText type="title" style={{ fontSize: 18 }}>
+              Welcome Back!
+            </ThemedText>
+            <ThemedText type="default" style={{ lineHeight: 20 }}>
+              Log in to continue managing your tasks and staying organized.
+            </ThemedText>
+          </View>
+          <LoginForm />
         </View>
-        <LoginForm />
-      </View>
+      </ScrollView>
     </CustomSafeAreaView>
   );
 };

@@ -8,7 +8,7 @@ import { ThemedText } from "@/components/ThemedText";
 
 const NotificationsPage = () => {
   return (
-    <CustomSafeAreaView>
+    <CustomSafeAreaView style={{ backgroundColor: Colors.faslist.white }}>
       <View style={{ flex: 1 }}>
         <ThemedText>NotificationsPage</ThemedText>
         <CustomButton textValue={"Back"} clickFunction={() => router.back()} />

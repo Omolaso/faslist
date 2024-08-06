@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
     fontFamily: "Poppins",
-    backgroundColor: Colors.faslist.white,
+    // backgroundColor: Colors.faslist.white,
   },
 });
 

@@ -60,22 +60,15 @@ const DashboardHomeHeroSection = () => {
           end={{ x: 0, y: 0.7 }}
         >
           <View style={styles.totalTasksContent}>
-            <ThemedText
-              type="title"
-              style={{
-                color: Colors.faslist.blue,
-                lineHeight: 0,
-                marginRight: 4,
-              }}
-            >
+            <ThemedText type="title" style={styles.topText}>
               8
             </ThemedText>
             <MaterialCommunityIcons
               name="slash-forward"
-              size={15}
+              size={25}
               color={Colors.faslist.gray}
             />
-            <ThemedText type="subtitle" style={{ color: Colors.faslist.gray }}>
+            <ThemedText type="subtitle" style={styles.bottomText}>
               20
             </ThemedText>
           </View>
@@ -159,6 +152,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#e6e1f2",
     borderRadius: 50,
     paddingVertical: 10,
+  },
+  topText: {
+    color: Colors.faslist.blue,
+    position: "absolute",
+    top: 3,
+    left: 15,
+  },
+  bottomText: {
+    position: "absolute",
+    bottom: 10,
+    color: Colors.faslist.gray,
+    right: 9,
   },
   line: {
     alignSelf: "center",
