@@ -9,7 +9,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   Pressable,
-  ScrollView,
 } from "react-native";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons/";
@@ -25,6 +24,7 @@ import CustomSafeAreaView from "@/components/CustomSafeAreaView";
 import CustomTextInput from "@/components/CustomTextInput";
 import CustomButton from "@/components/CustomButton";
 import InputFieldContainer from "./inputContainer";
+import CustomScrollView from "@/components/CustomScrollView";
 
 const priorityTasks: string[] = ["Low", "Medium", "High"];
 
@@ -70,7 +70,7 @@ const AddTodoPage = () => {
 
   return (
     <CustomSafeAreaView style={{ backgroundColor: Colors.faslist.white }}>
-      <ScrollView>
+      <CustomScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{ flex: 1, gap: 20 }}>
             <View style={styles.headerWrapper}>
@@ -143,7 +143,7 @@ const AddTodoPage = () => {
                             height: 150,
                             color: Colors.faslist.black,
                             textAlignVertical: "top",
-                            paddingVertical: 10
+                            paddingVertical: 10,
                           },
                         ]}
                       />
@@ -231,7 +231,7 @@ const AddTodoPage = () => {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </ScrollView>
+      </CustomScrollView>
     </CustomSafeAreaView>
   );
 };

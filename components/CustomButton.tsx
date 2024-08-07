@@ -5,13 +5,15 @@ import { ThemedText } from "@/components/ThemedText";
 
 type ButtonType = {
   textValue: string;
+  disabled?: boolean;
   clickFunction: () => void;
 };
 
-const CustomButton = ({ textValue, clickFunction }: ButtonType) => {
+const CustomButton = ({ textValue, disabled, clickFunction }: ButtonType) => {
   return (
     <TouchableOpacity
       onPress={() => clickFunction()}
+      disabled={disabled}
       style={styles.customButtonStyles}
     >
       <ThemedText type="title" style={styles.customButtonTextStyles}>
