@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, Redirect } from "expo-router";
 import Carousel from "pinar";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import CustomButton from "@/components/CustomButton";
 import CustomSafeAreaView from "@/components/CustomSafeAreaView";
+import { getValueFor } from "@/utils/secureStore";
 
 const OnboardingScreen = () => {
   const carouselRef = useRef<Carousel | null>(null);
@@ -20,6 +21,17 @@ const OnboardingScreen = () => {
   const handleChangeToNextPage = () => {
     carouselRef.current?.scrollToNext();
   };
+
+  useEffect(() => {
+    const checkFirstTimer = async () => {
+      const checker = await getValueFor("firstTime");
+      if (checker) {
+        router.replace("/(auth)");
+      }
+    };
+
+    checkFirstTimer();
+  }, []);
 
   return (
     <Carousel
@@ -126,7 +138,7 @@ const OnboardingScreen = () => {
 
             <CustomButton
               textValue={"Get Started"}
-              clickFunction={() => router.replace("(auth)")}
+              clickFunction={() => router.replace("/(auth)")}
             />
           </View>
         </CustomSafeAreaView>

@@ -4,7 +4,6 @@ import {
   Switch,
   View,
   Image,
-  Pressable,
   Keyboard,
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -19,11 +18,18 @@ import CustomTextInput from "@/components/CustomTextInput";
 import { Colors } from "@/constants/Colors";
 import CustomButton from "@/components/CustomButton";
 import CustomScrollView from "@/components/CustomScrollView";
+import { deleteKey } from "@/utils/secureStore";
+import { router } from "expo-router";
 
 const UserProfilePage = () => {
   const [isEnabled, setIsEnabled] = useState(false);
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const signOut = async () => {
+    await deleteKey("token");
+    router.replace("/(auth)");
+  };
 
   const {
     control,
@@ -49,7 +55,7 @@ const UserProfilePage = () => {
 
               <TouchableOpacity
                 style={styles.logoutButton}
-                onPress={() => console.log("logged")}
+                onPress={() => signOut()}
               >
                 <AntDesign
                   name="logout"

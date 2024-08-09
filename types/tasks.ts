@@ -1,8 +1,16 @@
+export interface TaskPropsResponse {
+  success: string;
+  data: TaskProps[];
+}
 export interface TaskProps {
-  title: string;
-  subtitle: string;
+  name: string;
+  description: string;
   priority: string;
-  time: string;
+  dueDate: string;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  _id?: string;
 }
 
 export interface CreateTaskProps {
@@ -11,4 +19,10 @@ export interface CreateTaskProps {
   // priority: string;
   reminder: string;
   reminderType: string;
+}
+
+export interface UserTaskFetchProps {
+  tasks: TaskPropsResponse | undefined;
+  isLoading: boolean;
+  error: any;
 }

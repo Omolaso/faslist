@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -8,12 +8,14 @@ import CustomTextInput from "@/components/CustomTextInput";
 import { ThemedText } from "@/components/ThemedText";
 import { PasswordType, SignupFormData } from "@/types/forms";
 import { Colors } from "@/constants/Colors";
+import { axiosInstance } from "@/utils/dataFetcher";
 
 const SignupForm = () => {
   const [securedPassword, setSecuredPassword] = useState<PasswordType>({
     password: true,
     confirmPassword: true,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePasswordToggle = (key: keyof PasswordType) => {
     setSecuredPassword((prev) => ({
@@ -29,9 +31,26 @@ const SignupForm = () => {
     formState: { errors },
   } = useForm<SignupFormData>();
 
-  const onSignup: SubmitHandler<SignupFormData> = (data) => {
-    console.log(data);
-    reset();
+  const onSignup: SubmitHandler<SignupFormData> = async (data) => {
+    setIsLoading(true);
+
+    const payload = {
+      username: data.username,
+      email: data.email.toLowerCase(),
+      phoneNumber: data.phone,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+    };
+
+    try {
+      const res = await axiosInstance.post("/users/register", payload);
+      // console.log(res);
+      reset();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -223,13 +242,20 @@ const SignupForm = () => {
       </View>
 
       <CustomButton
-        textValue="Sign Up"
+        textValue={
+          isLoading ? (
+            <ActivityIndicator size={24} color={Colors.faslist.white} />
+          ) : (
+            "Sign Up"
+          )
+        }
+        disabled={isLoading}
         clickFunction={handleSubmit(onSignup)}
       />
 
       <ThemedText type="default" style={{ fontWeight: 500 }}>
         Already have an account?{" "}
-        <Link href="(auth)">
+        <Link href="/(auth)">
           <ThemedText type="link">Login</ThemedText>
         </Link>
       </ThemedText>

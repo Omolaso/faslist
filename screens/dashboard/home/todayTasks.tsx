@@ -7,38 +7,44 @@ import { Colors } from "@/constants/Colors";
 import DashboardHomeHeroSection from "./hero";
 import Activities from "./activities";
 import NavigationTabs from "@/components/Tabs";
+import { RectangleSkeletonLoader } from "@/components/SkeletonLoader";
 
 const tasksArray: TaskProps[] = [
-  {
-    title: "TestTaskTitle1",
-    subtitle: "TestTaskSubtitle",
-    priority: "High",
-    time: "12:15PM",
-  },
-  {
-    title: "TestTaskTitle2",
-    subtitle: "TestTaskSubtitle",
-    priority: "High",
-    time: "12:15PM",
-  },
-  {
-    title: "TestTaskTitle3",
-    subtitle: "TestTaskSubtitle",
-    priority: "High",
-    time: "12:15PM",
-  },
-  {
-    title: "TestTaskTitle4",
-    subtitle: "TestTaskSubtitle",
-    priority: "High",
-    time: "12:15PM",
-  },
-  {
-    title: "TestTaskTitle5",
-    subtitle: "TestTaskSubtitle",
-    priority: "High",
-    time: "12:15PM",
-  },
+  //   {
+  //   title: "TestTaskTitle1",
+  //   subtitle: "TestTaskSubtitle",
+  //   priority: "High",
+  //   time: "12:15PM",
+  // status: "Completed",
+  // },
+  // {
+  //   title: "TestTaskTitle2",
+  //   subtitle: "TestTaskSubtitle",
+  //   priority: "High",
+  //   time: "12:15PM",
+  // status: "Pending",
+  // },
+  // {
+  //   title: "TestTaskTitle3",
+  //   subtitle: "TestTaskSubtitle",
+  //   priority: "High",
+  //   time: "12:15PM",
+  // status: "Completed",
+  // },
+  // {
+  //   title: "TestTaskTitle4",
+  //   subtitle: "TestTaskSubtitle",
+  //   priority: "High",
+  //   time: "12:15PM",
+  // status: "Pending"
+  // },
+  // {
+  //   title: "TestTaskTitle5",
+  //   subtitle: "TestTaskSubtitle",
+  //   priority: "High",
+  //   time: "12:15PM",
+  // status: "Pending"
+  // },
 ];
 
 const TaskRenderItem = (props: TaskProps) => {
@@ -46,13 +52,13 @@ const TaskRenderItem = (props: TaskProps) => {
     <View style={styles.renderItemWrapper}>
       <View style={{ gap: 5 }}>
         <ThemedText type="title" style={{ fontSize: 20 }}>
-          {props.title}
+          {props.name}
         </ThemedText>
         <ThemedText
           type="default"
           style={{ fontWeight: 400, color: Colors.faslist.gray }}
         >
-          {props.subtitle}
+          {props.description}
         </ThemedText>
       </View>
 
@@ -74,7 +80,7 @@ const TaskRenderItem = (props: TaskProps) => {
 
           <ThemedText type="default" style={{ fontWeight: 400 }}>
             Start by:{" "}
-            <ThemedText style={{ fontWeight: 600 }}>{props.time}</ThemedText>
+            <ThemedText style={{ fontWeight: 600 }}>{props.dueDate}</ThemedText>
           </ThemedText>
         </View>
       </View>
@@ -89,15 +95,16 @@ const TodayTasks = () => {
         data={tasksArray}
         renderItem={({ item }) => (
           <TaskRenderItem
-            title={item.title}
-            subtitle={item.subtitle}
+            name={item.name}
+            description={item.description}
             priority={item.priority}
-            time={item.time}
+            dueDate={item.dueDate}
+            status={""}
           />
         )}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.name}
         contentContainerStyle={{ gap: 10 }}
-        ListEmptyComponent={<ThemedText>Empty</ThemedText>}
+        ListEmptyComponent={<RectangleSkeletonLoader />}
         ListHeaderComponent={
           <>
             <View style={{ gap: 20, marginBottom: 20 }}>

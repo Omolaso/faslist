@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Platform, Pressable, StyleSheet, View, Image } from "react-native";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,8 +6,16 @@ import { Link } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import Boxes from "./boxes";
+import { UserContext } from "@/app/_layout";
+import { UserContextProps } from "@/types/userData";
+import { CircularSkeletonLoader } from "@/components/SkeletonLoader";
+import { UserTasks } from "@/app/(dashboard)/_layout";
+import { UserTaskFetchProps } from "@/types/tasks";
 
 const DashboardHomeHeroSection = () => {
+  const { user } = useContext(UserContext) as UserContextProps;
+  const { tasks, isLoading } = useContext(UserTasks) as UserTaskFetchProps;
+
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}
@@ -18,14 +26,20 @@ const DashboardHomeHeroSection = () => {
       <View style={styles.dashboardHeader}>
         <View style={styles.profileView}>
           <View style={styles.userImageContainer}>
-            <Image
-              source={require("@/assets/images/profileImage.png")}
-              style={styles.userAvatar}
-            />
+            {user?.profilePicture ? (
+              <Image
+                source={{ uri: user?.profilePicture }}
+                style={styles.userAvatar}
+              />
+            ) : (
+              <ThemedText type="title">
+                {user?.username.substring(0, 2).toUpperCase()}
+              </ThemedText>
+            )}
           </View>
           <View style={{ gap: 0.5 }}>
             <ThemedText type="default" style={{ fontWeight: 300 }}>
-              Hello Adesanya
+              Hello {user?.username},
             </ThemedText>
             <ThemedText
               type="subtitle"
@@ -37,7 +51,7 @@ const DashboardHomeHeroSection = () => {
         </View>
 
         <Link
-          href={"(dashboard)/notification"}
+          href={"/(dashboard)/notification"}
           asChild
           push
           style={{ marginRight: 15 }}
@@ -50,29 +64,33 @@ const DashboardHomeHeroSection = () => {
 
       <View style={[styles.profileView, styles.taskCountContainer]}>
         <ThemedText type="default" style={styles.taskHeader}>
-          You've 20 tasks scheduled for this month.
+          You've {tasks?.data?.length} tasks scheduled for this month.
         </ThemedText>
 
-        <LinearGradient
-          colors={[Colors.faslist.blue, Colors.faslist.white]}
-          style={styles.totalTasks}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 0.7 }}
-        >
-          <View style={styles.totalTasksContent}>
-            <ThemedText type="title" style={styles.topText}>
-              8
-            </ThemedText>
-            <MaterialCommunityIcons
-              name="slash-forward"
-              size={25}
-              color={Colors.faslist.gray}
-            />
-            <ThemedText type="subtitle" style={styles.bottomText}>
-              20
-            </ThemedText>
-          </View>
-        </LinearGradient>
+        {isLoading ? (
+          <CircularSkeletonLoader />
+        ) : (
+          <LinearGradient
+            colors={[Colors.faslist.blue, Colors.faslist.white]}
+            style={styles.totalTasks}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 0.7 }}
+          >
+            <View style={styles.totalTasksContent}>
+              <ThemedText type="title" style={styles.topText}>
+                8
+              </ThemedText>
+              <MaterialCommunityIcons
+                name="slash-forward"
+                size={25}
+                color={Colors.faslist.gray}
+              />
+              <ThemedText type="subtitle" style={styles.bottomText}>
+                20
+              </ThemedText>
+            </View>
+          </LinearGradient>
+        )}
       </View>
 
       <Image source={require("@/assets/images/line.png")} style={styles.line} />
@@ -100,9 +118,15 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   userImageContainer: {
+    top: -2,
+    left: -3,
     padding: 1,
     backgroundColor: Colors.faslist.avatarBg,
-    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    width: 80,
+    height: 80,
   },
   userAvatar: {
     ...Platform.select({

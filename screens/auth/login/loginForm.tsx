@@ -1,16 +1,28 @@
-import { Keyboard, View, Pressable, StyleSheet } from "react-native";
+import { useState, useContext } from "react";
+import {
+  Keyboard,
+  View,
+  Pressable,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { router, Link } from "expo-router";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { useState } from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import CustomTextInput from "@/components/CustomTextInput";
 import { ThemedText } from "@/components/ThemedText";
 import { LoginFormData } from "@/types/forms";
 import { Colors } from "@/constants/Colors";
+import { axiosInstance } from "@/utils/dataFetcher";
+import { saveKey } from "@/utils/secureStore";
+import { UserContext } from "@/app/_layout";
+import { UserContextProps, UserData } from "@/types/userData";
 
 const LoginForm = () => {
   const [securedPassword, setSecuredPassword] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(UserContext) as UserContextProps;
 
   const {
     control,
@@ -19,11 +31,28 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<LoginFormData>();
 
-  const onLogin: SubmitHandler<LoginFormData> = (data) => {
-    Keyboard.dismiss();
-    console.log(data);
-    reset();
-    router.replace("(dashboard)");
+  const onLogin: SubmitHandler<LoginFormData> = async (data) => {
+    setIsLoading(true);
+
+    const payload = {
+      email: data.email.toLowerCase(),
+      password: data.password,
+    };
+
+    try {
+      const res = await axiosInstance.post("/users/login", payload);
+      saveKey("token", res.data.token);
+      saveKey("firstTime", "false");
+      setUser(res.data.admin as UserData);
+      // console.log(res);
+      router.replace("/(dashboard)");
+      reset();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      Keyboard.dismiss();
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -107,11 +136,21 @@ const LoginForm = () => {
         </View>
       </View>
 
-      <CustomButton textValue="Login" clickFunction={handleSubmit(onLogin)} />
+      <CustomButton
+        textValue={
+          isLoading ? (
+            <ActivityIndicator size={24} color={Colors.faslist.white} />
+          ) : (
+            "Login"
+          )
+        }
+        disabled={isLoading}
+        clickFunction={handleSubmit(onLogin)}
+      />
 
       <ThemedText type="default" style={{ fontWeight: 500 }}>
         Don&apos;t have an account?{" "}
-        <Link href="(auth)/signup">
+        <Link href="/(auth)/signup">
           <ThemedText type="link">Sign Up</ThemedText>
         </Link>
       </ThemedText>

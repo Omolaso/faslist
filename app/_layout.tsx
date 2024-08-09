@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   DarkTheme,
   DefaultTheme,
@@ -6,18 +6,23 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
+import { RootSiblingParent } from "react-native-root-siblings";
+import { FetchProvider } from "@/components/FetchProvider";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { UserContextProps, UserData } from "@/types/userData";
 
-// https://todo-vjzt.onrender.com
+export const UserContext = createContext<UserContextProps | null>(null);
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [user, setUser] = useState<UserData | null>(null);
+
   const colorScheme = useColorScheme();
+
   const [loaded] = useFonts({
     Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
   });
@@ -33,14 +38,21 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(dashboard)" />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <RootSiblingParent>
+      <FetchProvider>
+        <UserContext.Provider value={{ user, setUser }}>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(onboarding)" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(dashboard)" />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </ThemeProvider>
+        </UserContext.Provider>
+      </FetchProvider>
+    </RootSiblingParent>
   );
 }

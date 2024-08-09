@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Colors } from "@/constants/Colors";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 
 type ButtonType = {
-  textValue: string;
+  textValue: string | ReactNode;
   disabled?: boolean;
   clickFunction: () => void;
 };
